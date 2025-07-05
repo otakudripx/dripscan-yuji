@@ -1,288 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>YUJI ITADORI // VAULT DROP</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html, body {
-      height: 100%;
-      background: #000;
+      height: 100%; background: #000; color: #ff0055;
       font-family: 'Orbitron', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow: hidden;
-      position: relative;
-      color: #ff2f92;
-    }
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; overflow: hidden; position: relative;
+    }.intro-screen {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh; background: #000;
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+  animation: fadeOut 5s ease forwards 2.5s;
+}
+.intro-text {
+  font-size: 2.2rem; font-weight: bold;
+  text-align: center; color: #ff0055;
+  border-right: 3px solid #ff0055;
+  white-space: nowrap; overflow: hidden; width: 0;
+  animation: typing 2.5s steps(30, end) forwards, blink 0.7s step-end infinite;
+}
 
-    .intro-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      animation: fadeOut 5s ease forwards 2.5s;
-    }
+@keyframes typing { from { width: 0 } to { width: 25ch } }
+@keyframes blink { 50% { border-color: transparent; } }
+@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-    .intro-text {
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-align: center;
-      color: #ff2f92;
-      border-right: 3px solid #ff2f92;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      animation: typing 2.5s steps(35, end) forwards, blink 0.7s step-end infinite;
-    }
+.vault-wrapper {
+  background-color: #000;
+  border: 2px solid #ff0055;
+  box-shadow: 0 0 25px #ff0055;
+  padding: 20px;
+  max-width: 720px;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  z-index: 10;
+}
+.main-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #ff0055;
+  margin-bottom: 5px;
+}
+.subtitle {
+  font-size: 0.85rem;
+  color: #ff7e9f;
+  margin-bottom: 30px;
+}
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+.stats-box {
+  flex: 1 1 45%;
+  border: 1px solid #ff0055;
+  padding: 12px;
+  font-size: 0.75rem;
+  text-align: left;
+  color: #ffb3c6;
+  box-shadow: 0 0 12px #ff0055;
+  border-radius: 6px;
+  min-width: 140px;
+}
+.stats-box p {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ff0055;
+  font-size: 0.72rem;
+}
+.vault-video {
+  border: 2px solid #ff0055;
+  box-shadow: 0 0 18px #ff0055;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.vault-video video {
+  width: 100%; height: auto; display: block;
+}
+.drop-details {
+  font-size: 0.8rem;
+  color: #ffb3c6;
+  line-height: 1.6;
+}
+.drop-details span {
+  color: #ff0055;
+  font-weight: 700;
+}
+.code-block {
+  margin-top: 20px;
+  padding: 10px 0;
+  border: 1px solid #ff0055;
+  font-size: 1.2rem;
+  font-weight: 800;
+  box-shadow: 0 0 12px #ff0055;
+  color: #ff0055;
+  border-radius: 6px;
+}
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+.vault-button {
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #ff0055;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.vault-button.use { background: #fff; color: #000; }
+.vault-button.claim { background: #ff0055; color: #fff; }
+.footer {
+  font-size: 0.7rem;
+  color: #ffb3c6;
+  margin-top: 15px;
+}
+.particles {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; z-index: 1;
+  pointer-events: none;
+}
+.particles span {
+  position: absolute;
+  display: block;
+  width: 6px; height: 6px;
+  background: #ff0055;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: floatUp 10s linear infinite;
+}
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh) scale(0.6);
+    opacity: 0.2;
+  }
+  to {
+    transform: translateY(-10vh) scale(1);
+    opacity: 0.6;
+  }
+}
+@media (max-width: 500px) {
+  .stats-box { flex: 1 1 100%; text-align: center; }
+  .main-title { font-size: 1.2rem; }
+  .code-block { font-size: 1rem; }
+  .vault-button { width: 100%; }
+  html, body { padding: 10px; align-items: flex-start; }
+}
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 36ch }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    .vault-wrapper {
-      background-color: #000;
-      border: 2px solid #ff2f92;
-      box-shadow: 0 0 25px #ff2f92;
-      padding: 20px;
-      max-width: 620px;
-      width: 100%;
-      text-align: center;
-      border-radius: 10px;
-      z-index: 10;
-    }
-
-    .main-title {
-      font-size: 1.4rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: #ff2f92;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      font-size: 0.85rem;
-      color: #ffa3d2;
-      margin-bottom: 20px;
-    }
-
-    .vault-video {
-      border: 2px solid #ff2f92;
-      box-shadow: 0 0 18px #ff2f92;
-      border-radius: 6px;
-      overflow: hidden;
-      margin: 20px 0;
-      max-height: 280px;
-    }
-
-    .vault-video video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .stats-container {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .stats-box {
-      flex: 1 1 48%;
-      border: 1px solid #ff2f92;
-      padding: 12px;
-      font-size: 0.72rem;
-      text-align: left;
-      color: #ffc7e7;
-      box-shadow: 0 0 12px #ff2f92;
-      border-radius: 6px;
-    }
-
-    .stats-box p {
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #ff2f92;
-      font-size: 0.72rem;
-    }
-
-    .drop-details {
-      font-size: 0.78rem;
-      color: #ffa3d2;
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
-
-    .drop-details span {
-      color: #ff2f92;
-      font-weight: 700;
-    }
-
-    .code-block {
-      margin-top: 10px;
-      padding: 8px 0;
-      border: 1px solid #ff2f92;
-      font-size: 1.1rem;
-      font-weight: 800;
-      box-shadow: 0 0 12px #ff2f92;
-      color: #ff2f92;
-      border-radius: 6px;
-    }
-
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 15px;
-    }
-
-    .vault-button {
-      padding: 10px 16px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 4px;
-      box-shadow: 0 0 10px #ff2f92;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .vault-button.use {
-      background: #fff;
-      color: #000;
-    }
-
-    .vault-button.claim {
-      background: #ff2f92;
-      color: #fff;
-    }
-
-    .footer {
-      font-size: 0.65rem;
-      color: #ffc7e7;
-      margin-top: 12px;
-    }
-
-    .particles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .particles span {
-      position: absolute;
-      display: block;
-      width: 6px;
-      height: 6px;
-      background: #ff2f92;
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: floatUp 10s linear infinite;
-    }
-
-    @keyframes floatUp {
-      from {
-        transform: translateY(100vh) scale(0.6);
-        opacity: 0.2;
-      }
-      to {
-        transform: translateY(-10vh) scale(1);
-        opacity: 0.6;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .stats-box {
-        flex: 1 1 100%;
-        text-align: center;
-      }
-      .main-title { font-size: 1.1rem; }
-      .code-block { font-size: 0.95rem; }
-      .vault-button { width: 100%; }
-      html, body {
-        padding: 10px;
-        align-items: flex-start;
-      }
-    }
   </style>
 </head>
 <body>
-
-  <!-- Ember Particles -->
-  <div class="particles" id="particle-container"></div>
-
-  <!-- Intro -->
-  <div class="intro-screen">
-    <div class="intro-text">☣ SYNCHRONIZING YUJI'S CORE...</div>
+  <div class="particles" id="particle-container"></div>  <div class="intro-screen">
+    <div class="intro-text">⚠ SYNCHRONIZING YUJI'S CORE...</div>
+  </div>  <div class="vault-wrapper">
+    <div class="main-title">💥 ACCESS GRANTED: YUJI'S RECKONING</div>
+    <div class="subtitle">🔥 (YUJI ITADORI) // CURSED VAULT</div><div class="stats-container">
+  <div class="stats-box">
+    <p>BANKAI CORE LEVEL:</p>
+    Cursed Energy Spike: 92%<br>
+    Domain Status: UNSTABLE<br>
+    Control Type: MANUAL
   </div>
+  <div class="stats-box">
+    <p>SPIRIT CHAIN:</p>
+    Bond with Sukuna: ACTIVE<br>
+    Output Mode: SURGE<br>
+    Curse Grade: SPECIAL
+  </div>
+</div>
 
-  <!-- Vault -->
-  <div class="vault-wrapper">
-    <div class="main-title">💀 ACCESS GRANTED: YUJI’S RECKONING</div>
-    <div class="subtitle">🎴 (YUJI ITADORI) // CURSED VAULT</div>
+<div class="vault-video">
+  <video autoplay muted loop playsinline>
+    <source src="https://files.catbox.moe/lxt0p3.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
 
-    <div class="vault-video">
-      <video autoplay muted loop playsinline>
-        <source src="https://files.catbox.moe/lxt0p3.mp4" type="video/mp4" />
-      </video>
-    </div>
+<div class="drop-details">
+  USER ID: <span>YUJI-101</span><br>
+  DROPS CLAIMED: <span>03 / 24</span><br>
+  PROTOCOL ENDS IN: <span id="timer">03:00:00</span>
+</div>
 
-    <div class="stats-container">
-      <div class="stats-box">
-        <p>CURSE CORE LEVEL:</p>
-        Cursed Energy Surge: 94.7%<br>
-        Sukuna Influence: SUPPRESSED<br>
-        Emotion Sync: STABLE
-      </div>
-      <div class="stats-box">
-        <p>SPIRIT LINK:</p>
-        Vessel Strength: 92%<br>
-        Curse Type: DIVINE<br>
-        Battle Flux: SPIKED
-      </div>
-    </div>
+<div class="code-block" id="drop-code">YUJIX100</div>
 
-    <div class="drop-details">
-      USER ID: <span>DSX-916</span><br>
-      DROPS CLAIMED: <span>01 / 24</span><br>
-      PROTOCOL ENDS IN: <span id="timer">03:00:00</span>
-    </div>
+<div class="button-group">
+  <button class="vault-button use" onclick="copyDropCode()">⚡ USE CODE</button>
+  <button class="vault-button claim" onclick="window.location.href='https://otakudripx.blinkstore.ai/'">📥 CLAIM ANOTHER DRIP</button>
+</div>
 
-    <div class="code-block" id="drop-code">YUJIX100</div>
+<div class="footer">🔒 Vault Access Logs Are Classified</div>
 
-    <div class="button-group">
-      <button class="vault-button use" onclick="copyDropCode()">⚡ USE CODE</button>
-      <button class="vault-button claim" onclick="window.location.href='https://otakudripx.blinkstore.in/'">📥 CLAIM ANOTHER DRIP</button>
-    </div>
-
-    <div class="footer">🔒 Vault Access Logs Are Classified</div>
-
-  <script>
-    // Ember Particles
+  </div>  <script>
+    // Ember particles
     const container = document.getElementById("particle-container");
     for (let i = 0; i < 60; i++) {
       const p = document.createElement("span");
@@ -292,7 +217,7 @@
       container.appendChild(p);
     }
 
-    // Timer
+    // Countdown timer (3 hours)
     let seconds = 10800;
     const countdown = document.getElementById("timer");
     function updateTimer() {
@@ -305,9 +230,10 @@
     }
     setInterval(updateTimer, 1000);
 
-    // Copy only YUJIX100 (no emoji)
+    // Clipboard copy
     function copyDropCode() {
-      navigator.clipboard.writeText("YUJIX100").then(() => {
+      const code = document.getElementById("drop-code").textContent.replace(/[^A-Z0-9]/g, '');
+      navigator.clipboard.writeText(code).then(() => {
         const msg = document.createElement("div");
         msg.textContent = "✓ CODE COPIED";
         msg.style.position = "fixed";
@@ -315,16 +241,15 @@
         msg.style.left = "50%";
         msg.style.transform = "translateX(-50%)";
         msg.style.background = "#1c1c1c";
-        msg.style.color = "#ff2f92";
+        msg.style.color = "#ff0055";
         msg.style.padding = "0.6rem 1.2rem";
-        msg.style.border = "1px solid #ff2f92";
+        msg.style.border = "1px solid #ff0055";
         msg.style.borderRadius = "10px";
         msg.style.zIndex = "1000";
-        msg.style.boxShadow = "0 0 10px #ff2f92";
+        msg.style.boxShadow = "0 0 10px #ff0055";
         document.body.appendChild(msg);
         setTimeout(() => msg.remove(), 2000);
       });
     }
-  </script>
-</body>
+  </script></body>
 </html>
